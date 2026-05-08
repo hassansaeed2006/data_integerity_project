@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Document Vault</title>
+    <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <h1>🔐 Secure Document Vault</h1>
+                </div>
+                <div class="navbar-menu" id="navbar-menu">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#" id="nav-login" class="nav-link">Login</a>
+                    <a href="#" id="nav-register" class="nav-link">Register</a>
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <a href="#" id="nav-dashboard" class="nav-link">Dashboard</a>
+                        <a href="#" id="nav-documents" class="nav-link">Documents</a>
+                        <a href="#" id="nav-profile" class="nav-link">Profile</a>
+                        <a href="#" id="nav-admin" class="nav-link" style="display: none;">Admin</a>
+                        <button id="nav-logout" class="nav-link btn-logout">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Page -->
+            <div id="home-page" class="page active">
+                <div class="container">
+                    <div class="hero">
+                        <h1>Welcome to Secure Document Vault</h1>
+                        <p>A modern, secure platform for managing sensitive documents</p>
+                        <div class="hero-features">
+                            <div class="feature">
+                                <h3>🔒 End-to-End Encryption</h3>
+                                <p>All documents are encrypted with AES-256</p>
+                            </div>
+                            <div class="feature">
+                                <h3>✍️ Digital Signatures</h3>
+                                <p>Verify document authenticity and integrity</p>
+                            </div>
+                            <div class="feature">
+                                <h3>🔑 Multi-Factor Authentication</h3>
+                                <p>Secure access with JWT + 2FA support</p>
+                            </div>
+                            <div class="feature">
+                                <h3>👥 Role-Based Access</h3>
+                                <p>Admin, Manager, and User roles with specific permissions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Page -->
+            <div id="login-page" class="page">
+                <div class="container">
+                    <div class="form-container">
+                        <h2>Login</h2>
+                        <form id="login-form">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="login-username" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="login-password" required>
+                            </div>
+                            <div id="login-2fa-section" style="display: none;">
+                                <div class="alert alert-info">
+                                    Two-Factor Authentication Required
+                                </div>
+                                <div class="form-group">
+                                    <label>2FA Code</label>
+                                    <input type="text" id="login-2fa-code" placeholder="000000" maxlength="6">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <p class="form-link">Don't have an account? <a href="#register">Register here</a></p>
+                        </form>
+                        <div id="login-message" class="message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register Page -->
+            <div id="register-page" class="page">
+                <div class="container">
+                    <div class="form-container">
+                        <h2>Register</h2>
+                        <form id="register-form">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="register-username" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="register-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="register-password" required>
+                                <small class="password-requirements">
+                                    Requirements:
+                                    <ul>
+                                        <li>At least 8 characters</li>
+                                        <li>1 uppercase letter</li>
+                                        <li>1 lowercase letter</li>
+                                        <li>1 digit</li>
+                                        <li>1 special character (!@#$%^&*)</li>
+                                    </ul>
+                                </small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                            <p class="form-link">Already have an account? <a href="#login">Login here</a></p>
+                        </form>
+                        <div id="register-message" class="message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page">
+                <div class="container">
+                    <h2>Dashboard</h2>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <h3>👤 Profile</h3>
+                            <p id="dashboard-username"></p>
+                            <p id="dashboard-email"></p>
+                            <p id="dashboard-role"></p>
+                            <button onclick="navigateTo('#profile')" class="btn btn-secondary">Edit Profile</button>
+                        </div>
+                        <div class="dashboard-card">
+                            <h3>📄 Documents</h3>
+                            <p id="dashboard-doc-count">Loading...</p>
+                            <button onclick="navigateTo('#documents')" class="btn btn-secondary">Manage Documents</button>
+                        </div>
+                        <div class="dashboard-card">
+                            <h3>🔐 Security</h3>
+                            <p id="dashboard-2fa-status">Loading...</p>
+                            <button onclick="navigateTo('#security')" class="btn btn-secondary">Security Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Page -->
+            <div id="documents-page" class="page">
+                <div class="container">
+                    <h2>Manage Documents</h2>
+                    
+                    <div class="documents-section">
+                        <h3>Upload Document</h3>
+                        <form id="upload-form" class="upload-form">
+                            <div class="form-group">
+                                <label>Select File</label>
+                                <input type="file" id="upload-file" required>
+                                <small>Max size: 500MB. Allowed: pdf, doc, docx, txt, xlsx, csv, png, jpg, jpeg</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Description (Optional)</label>
+                                <textarea id="upload-description" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Upload & Encrypt</button>
+                        </form>
+                        <div id="upload-message" class="message"></div>
+                    </div>
+
+                    <div class="documents-section">
+                        <h3>Your Documents</h3>
+                        <div id="documents-list" class="documents-list">
+                            <p>Loading documents...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Detail Page -->
+            <div id="document-detail-page" class="page">
+                <div class="container">
+                    <button onclick="navigateTo('#documents')" class="btn btn-secondary">← Back</button>
+                    <div id="document-detail-content"></div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div id="profile-page" class="page">
+                <div class="container">
+                    <h2>Profile Settings</h2>
+                    <div class="profile-section">
+                        <h3>Change Password</h3>
+                        <form id="change-password-form">
+                            <div class="form-group">
+                                <label>Current Password</label>
+                                <input type="password" id="current-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" id="new-password" required>
+                                <small class="password-requirements">
+                                    Requirements:
+                                    <ul>
+                                        <li>At least 8 characters</li>
+                                        <li>1 uppercase letter</li>
+                                        <li>1 lowercase letter</li>
+                                        <li>1 digit</li>
+                                        <li>1 special character (!@#$%^&*)</li>
+                                    </ul>
+                                </small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </form>
+                        <div id="password-message" class="message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Page -->
+            <div id="security-page" class="page">
+                <div class="container">
+                    <h2>Security Settings</h2>
+                    <div class="security-section">
+                        <h3>Two-Factor Authentication (2FA)</h3>
+                        <div id="2fa-status"></div>
+                        <button id="2fa-setup-btn" class="btn btn-primary">Setup 2FA</button>
+                        <div id="2fa-section" style="display: none;">
+                            <p>Scan this QR code with your authenticator app:</p>
+                            <div id="2fa-qr"></div>
+                            <p>Or enter this code manually: <code id="2fa-secret"></code></p>
+                            <form id="2fa-verify-form">
+                                <div class="form-group">
+                                    <label>Verify 2FA Code</label>
+                                    <input type="text" id="2fa-verify-code" placeholder="000000" maxlength="6" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enable 2FA</button>
+                            </form>
+                        </div>
+                        <div id="2fa-message" class="message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Panel -->
+            <div id="admin-page" class="page">
+                <div class="container">
+                    <h2>Admin Panel</h2>
+                    
+                    <div class="admin-section">
+                        <h3>Statistics</h3>
+                        <div id="admin-stats" class="stats-grid"></div>
+                    </div>
+
+                    <div class="admin-section">
+                        <h3>Manage Users</h3>
+                        <div id="users-list" class="users-table"></div>
+                    </div>
+
+                    <div class="admin-section">
+                        <h3>Audit Logs</h3>
+                        <div id="audit-logs" class="audit-logs"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Messages -->
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <script src="/assets/app.js"></script>
+</body>
+</html>

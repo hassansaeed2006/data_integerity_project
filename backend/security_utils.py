@@ -130,8 +130,8 @@ class RBACManager:
     """Role-Based Access Control"""
     
     ROLES = {
-        'admin': ['manage_users', 'manage_roles', 'review_documents', 'delete_documents', 'upload_documents', 'verify_documents', 'view_audit_logs'],
-        'manager': ['review_documents', 'verify_documents', 'upload_documents', 'delete_documents'],
+        'admin': ['manage_users', 'manage_roles', 'review_documents', 'delete_documents', 'upload_documents', 'verify_documents', 'view_audit_logs', 'download_documents'],
+        'manager': ['review_documents', 'verify_documents', 'upload_documents', 'delete_documents', 'download_documents'],
         'user': ['upload_documents', 'download_documents', 'view_own_documents', 'delete_own_documents', 'verify_own_documents']
     }
     
